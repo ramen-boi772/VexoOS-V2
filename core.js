@@ -14,7 +14,13 @@ function createWindow(id,title,content){
   const win=document.createElement("div");
   win.className="window";
   win.id=id;
-
+  win.style.resize = "both";
+  win.style.overflow = "auto";
+  .window{
+  resize: both;
+  overflow: auto;
+}
+  
   win.innerHTML=`
     <div class="header" onmousedown="dragStart(event,this.parentElement)">
       <span>${title}</span>
@@ -218,4 +224,55 @@ function filterStartApps(query){
 
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
+}
+
+//////////////////////////////
+// DESKTOP ICON SYSTEM
+//////////////////////////////
+
+function createDesktopIcon(name, title, content){
+  const icon = document.createElement("div");
+  icon.innerText = title;
+  icon.style.position = "absolute";
+  icon.style.left = "20px";
+  icon.style.top = (60 + document.querySelectorAll(".desktop-icon").length * 70) + "px";
+  icon.className = "desktop-icon";
+  icon.style.cursor = "pointer";
+
+  icon.onclick = () => createWindow(name, title, content);
+
+  document.getElementById("desktop").appendChild(icon);
+}
+
+//////////////////////////////
+// RECYCLE BIN
+//////////////////////////////
+
+let recycleBin = [];
+
+function deleteFileToRecycle(name){
+  let data = loadFile(name);
+  if(data){
+    recycleBin.push({name,data});
+    deleteFile(name);
+  }
+}
+
+function openRecycleBin(){
+  let items = recycleBin.map(item =>
+    `<div>
+      ${item.name}
+      <button onclick="restoreFile('${item.name}')">Restore</button>
+    </div>`
+  ).join("");
+
+  createWindow("recycle","Recycle Bin", items);
+}
+
+function restoreFile(name){
+  let item = recycleBin.find(f=>f.name===name);
+  if(item){
+    saveFile(item.name,item.data);
+    recycleBin = recycleBin.filter(f=>f.name!==name);
+  }
 }
