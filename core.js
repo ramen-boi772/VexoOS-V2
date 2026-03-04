@@ -276,3 +276,11 @@ function restoreFile(name){
     recycleBin = recycleBin.filter(f=>f.name!==name);
   }
 }
+
+// TEST WINDOW (for debugging)
+window.onload = () => {
+  createWindow("welcome", "Welcome to VexoOS", `
+    <h2>System Working ✅</h2>
+    <p>Your window engine is running correctly.</p>
+  `);
+};
