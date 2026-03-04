@@ -284,3 +284,15 @@ window.onload = () => {
     <p>Your window engine is running correctly.</p>
   `);
 };
+
+createAppShortcut();
+function createAppShortcut(){
+  createDesktopIcon(
+    "welcomeApp",
+    "Welcome",
+    `
+      <h2>Hello 👋</h2>
+      <p>This is a real VexoOS window.</p>
+    `
+  );
+}
