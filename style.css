@@ -60,3 +60,9 @@ left:0 !important;
 width:100vw !important;
 height:calc(100vh - 40px) !important;
 }
+
+.desktop-icon{
+  width:80px;
+  text-align:center;
+  color:white;
+}
